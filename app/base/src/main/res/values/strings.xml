@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="we_cant_found_anything_here">we couldn\'t find anything here</string>
+    <string name="something_is_wrong">Something went wrong</string>
+    <string name="try_again"><u>Retry</u></string>
+    <string name="without_internet_connection">No internet connection </string>
+    <string name="time_of_response_too_long">Response time too long</string>
+    <string name="come_back"><u>Back</u></string>
+
+
+</resources>
