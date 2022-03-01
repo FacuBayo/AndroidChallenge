@@ -9,10 +9,19 @@
         android:id="@+id/albumListFragment"
         android:name="com.androidchallenge.presenter.AlbumListFragment"
         android:label="fragment_album_list"
-        tools:layout="@layout/fragment_album_list" />
+        tools:layout="@layout/fragment_album_list" >
+        <action
+            android:id="@+id/action_albumListFragment_to_photoListFragment"
+            app:destination="@id/photoListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/photoListFragment"
         android:name="com.androidchallenge.presenter.PhotoListFragment"
         android:label="fragment_photo_list"
-        tools:layout="@layout/fragment_photo_list" />
+        tools:layout="@layout/fragment_photo_list" >
+        <argument
+            android:name="albumId"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
 </navigation>

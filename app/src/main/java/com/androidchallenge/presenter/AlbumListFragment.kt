@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.androidchallenge.R
 import com.androidchallenge.data.repository.network.response.AlbumResponse
 import com.androidchallenge.databinding.FragmentAlbumListBinding
@@ -94,7 +95,8 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
     }
 
     private fun onItemSelected(albumResponse: AlbumResponse) {
-        Toast.makeText(requireContext(), albumResponse.title, Toast.LENGTH_LONG).show()
+        val action = AlbumListFragmentDirections.actionAlbumListFragmentToPhotoListFragment(albumResponse.id)
+        findNavController().navigate(action)
     }
 
 
