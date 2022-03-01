@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_album_list" >
         <action
             android:id="@+id/action_albumListFragment_to_photoListFragment"
-            app:destination="@id/photoListFragment" />
+            app:destination="@id/photoListFragment"
+            app:enterAnim="@anim/from_rigth"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/photoListFragment"

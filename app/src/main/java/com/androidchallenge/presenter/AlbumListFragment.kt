@@ -1,8 +1,11 @@
 package com.androidchallenge.presenter
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -26,11 +29,19 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentAlbumListBinding.bind(view)
+        setHasOptionsMenu(true)
 
         setupObserversViewModel()
         fetchAlbumList()
         bindData()
 
+    }
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_item, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 
@@ -86,6 +97,7 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
     }
 
     private fun bindData() {
+        activity?.title = ""
         binding.layoutGenericError.textviewTry.setOnClickListener {
             viewModel.fetchAlbums()
         }
