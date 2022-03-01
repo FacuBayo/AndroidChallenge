@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.androidchallenge.R
 import com.androidchallenge.data.repository.network.response.PhotoResponse
@@ -36,10 +37,10 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
 
     private fun bindData() {
         binding.layoutGenericError.textviewTry.setOnClickListener {
-            viewModel.fetchAlbums()
+            findNavController().navigate(R.id.action_photoListFragment_to_albumListFragment)
         }
         binding.layoutNoConnection.textviewTry.setOnClickListener {
-            viewModel.fetchAlbums()
+            findNavController().navigate(R.id.action_photoListFragment_to_albumListFragment)
         }
     }
 

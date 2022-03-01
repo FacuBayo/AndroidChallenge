@@ -116,5 +116,14 @@ class JsonPlaceHolderRepository @Inject constructor(private val jsonPlaceHolderA
                 }
             }
 
+        }.catch {
+            emit(
+                com.highquality.base.data.Response.Failure(
+                    com.highquality.base.exception.GenericException(
+                        statusCode = 999,
+                        statusMessage = "Something unexpected happened"
+                    )
+                )
+            )
         }
 }

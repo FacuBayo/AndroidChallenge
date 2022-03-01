@@ -1,8 +1,10 @@
 package com.androidchallenge.presenter
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -25,12 +27,12 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
     private val viewModel: JsonPlaceHolderViewModel by viewModels()
     private lateinit var adapter: AlbumAdapter
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = FragmentAlbumListBinding.bind(view)
         setHasOptionsMenu(true)
-
+        adapter = AlbumAdapter(mutableListOf()) { albumResponse -> onItemSelected(albumResponse) }
         setupObserversViewModel()
         fetchAlbumList()
         bindData()
@@ -38,9 +40,41 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
     }
 
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_item, menu)
+
+        val item = menu.findItem(R.id.search_action)
+        val searchView = item.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.let {
+                    it.filter.filter(newText)
+                }
+                return true
+            }
+
+        })
+
+        item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+
+            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                adapter?.filter?.filter("")
+                return true
+            }
+
+            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                return true
+            }
+
+
+        })
+
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -56,6 +90,7 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
 
     fun setupObserversViewModel() {
         viewModel.mutableLoading.observe(this, Observer {
+            Log.d("mylogs", "loading status: ${it}")
             if (it) {
                 binding.mainContainer.visibility = View.GONE
                 binding.layoutLoading.root.visibility = View.VISIBLE
@@ -66,12 +101,15 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
         })
         viewModel.mutableConnection.observe(this, Observer {
             showNoConnection(it)
+            Log.d("mylogs", "connection: ${it}")
         })
         viewModel.mutableThrowables.observe(this, Observer {
             showGenericError(it != null)
+            Log.d("mylogs", "generic error: ${it}")
         })
         viewModel.albumLiveData.observe(this, {
             initRecycler(it)
+            Log.d("mylogs", "livedata: ${it}")
         })
     }
 
@@ -107,7 +145,8 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
     }
 
     private fun onItemSelected(albumResponse: AlbumResponse) {
-        val action = AlbumListFragmentDirections.actionAlbumListFragmentToPhotoListFragment(albumResponse.id)
+        val action =
+            AlbumListFragmentDirections.actionAlbumListFragmentToPhotoListFragment(albumResponse.id)
         findNavController().navigate(action)
     }
 

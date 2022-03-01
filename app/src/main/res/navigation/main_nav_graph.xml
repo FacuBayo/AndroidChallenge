@@ -27,5 +27,8 @@
             android:name="albumId"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_photoListFragment_to_albumListFragment"
+            app:destination="@id/albumListFragment" />
     </fragment>
 </navigation>
