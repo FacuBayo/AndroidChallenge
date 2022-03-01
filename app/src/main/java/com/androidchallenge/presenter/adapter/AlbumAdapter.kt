@@ -10,7 +10,7 @@ import com.androidchallenge.R
 import com.androidchallenge.data.repository.network.response.AlbumResponse
 import com.androidchallenge.domain.model.Album
 
-class AlbumAdapter(private val albumList: List<AlbumResponse>) :
+class AlbumAdapter(private val albumList: List<AlbumResponse>, private val  onClickListener:(AlbumResponse) -> Unit) :
     RecyclerView.Adapter<AlbumViewHolder>() {
 
     lateinit var context: Context
@@ -30,7 +30,7 @@ class AlbumAdapter(private val albumList: List<AlbumResponse>) :
         val item = albumList[position]
 
         val animation: Animation = AnimationUtils.loadAnimation(context, R.anim.animation_one)
-        holder.bind(item)
+        holder.bind(item, onClickListener)
         holder.itemView.startAnimation(animation)
 
     }
