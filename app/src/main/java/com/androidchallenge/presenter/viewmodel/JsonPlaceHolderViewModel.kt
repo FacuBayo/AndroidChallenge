@@ -3,8 +3,10 @@ package com.androidchallenge.presenter.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.androidchallenge.data.repository.network.response.AlbumResponse
 import com.androidchallenge.domain.GetAlbumUseCase
 import com.androidchallenge.domain.model.Album
+import com.androidchallenge.domain.model.mapper.AlbumListResponseMapper
 import com.highquality.base.data.Response
 import com.highquality.base.exception.NoInternetException
 import com.highquality.base.presenter.BaseViewModel
@@ -22,8 +24,8 @@ class JsonPlaceHolderViewModel @Inject constructor(
 ): BaseViewModel() {
 
 
-    private val mutableAlbum: MutableLiveData<List<Album>> = MutableLiveData()
-    val albumLiveData: LiveData<List<Album>> = mutableAlbum
+    private val mutableAlbum: MutableLiveData<List<AlbumResponse>> = MutableLiveData()
+    val albumLiveData: LiveData<List<AlbumResponse>> = mutableAlbum
 
 
     fun fetchAlbums() {
@@ -32,7 +34,7 @@ class JsonPlaceHolderViewModel @Inject constructor(
             executeSimpleUseCase(getAlbumUseCase).single().collect {
                 notifyRemoveLoading()
                 when(it){
-                    is Response.Success<List<Album>> -> {
+                    is Response.Success<List<AlbumResponse>> -> {
                         mutableAlbum.value = it.data!!
                     }
 

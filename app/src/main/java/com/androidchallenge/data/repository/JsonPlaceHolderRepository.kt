@@ -1,6 +1,7 @@
 package com.androidchallenge.data.repository
 
 import com.androidchallenge.data.repository.network.api.JsonPlaceHolderApi
+import com.androidchallenge.data.repository.network.response.AlbumResponse
 import com.androidchallenge.domain.model.Album
 import com.androidchallenge.domain.model.mapper.AlbumListResponseMapper
 import com.androidchallenge.domain.repository.IGetAlbumListRepository
@@ -16,15 +17,15 @@ import javax.inject.Inject
 class JsonPlaceHolderRepository @Inject constructor(private val jsonPlaceHolderApi: JsonPlaceHolderApi) :
     IGetAlbumListRepository {
 
-    override suspend fun getAlbumList(): Flow<Response<List<Album>>> = flow {
+    override suspend fun getAlbumList(): Flow<Response<List<AlbumResponse>>> = flow {
 
-        val response = jsonPlaceHolderApi.getSportEvents()
+        val response = jsonPlaceHolderApi.getAlbums()
 
         when (response.code()) {
             200 -> {
-                val mapped = AlbumListResponseMapper.toAlbumList(response.body()!!)
 
-                emit(Response.Success(mapped))
+                //val mapped = AlbumListResponseMapper.toAlbumList(response.body()!!)
+                emit(Response.Success(response.body()!!))
             }
 
             401 -> {
