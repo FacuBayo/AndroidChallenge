@@ -33,8 +33,9 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
         binding = FragmentAlbumListBinding.bind(view)
         setHasOptionsMenu(true)
         adapter = AlbumAdapter(mutableListOf()) { albumResponse -> onItemSelected(albumResponse) }
+
         setupObserversViewModel()
-        fetchAlbumList()
+        viewModel.fetchAlbums()
         bindData()
 
     }
@@ -78,10 +79,6 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-
-    private fun fetchAlbumList() {
-        viewModel.fetchAlbums()
-    }
 
     private fun initRecycler(albumList: List<AlbumResponse>) {
         adapter = AlbumAdapter(albumList) { albumResponse -> onItemSelected(albumResponse) }

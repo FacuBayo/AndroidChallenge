@@ -15,7 +15,6 @@
         <activity
             android:name=".presenter.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.AndroidChallenge"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

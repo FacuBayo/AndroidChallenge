@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1e192b"
+    android:background="#007345"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout

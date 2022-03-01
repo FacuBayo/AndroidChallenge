@@ -7,11 +7,13 @@ import com.androidchallenge.domain.repository.IGetAlbumListRepository
 import com.androidchallenge.domain.repository.IGetAlbumPhotosRepository
 import com.highquality.base.data.Response
 import com.highquality.base.exception.GenericException
+import com.highquality.base.exception.NoInternetException
 import com.highquality.base.exception.ServiceErrorException
 import com.highquality.base.exception.UnAuthorizeException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class JsonPlaceHolderRepository @Inject constructor(private val jsonPlaceHolderApi: JsonPlaceHolderApi) :
@@ -61,14 +63,26 @@ class JsonPlaceHolderRepository @Inject constructor(private val jsonPlaceHolderA
             }
         }
     }.catch {
-        emit(
-            Response.Failure(
-                GenericException(
-                    statusCode = 999,
-                    statusMessage = "Something unexpected happened"
+        it.printStackTrace()
+        if (it is UnknownHostException) {
+            emit(
+                Response.Failure(
+                    NoInternetException(
+                        statusCode = 999,
+                        statusMessage = "Something unexpected happened"
+                    )
                 )
             )
-        )
+        } else {
+            emit(
+                Response.Failure(
+                    GenericException(
+                        statusCode = 999,
+                        statusMessage = "Something unexpected happened"
+                    )
+                )
+            )
+        }
     }
 
     override suspend fun getAlbumPhotos(albumId: String): Flow<Response<List<PhotoResponse>>> =
@@ -117,13 +131,25 @@ class JsonPlaceHolderRepository @Inject constructor(private val jsonPlaceHolderA
             }
 
         }.catch {
-            emit(
-                com.highquality.base.data.Response.Failure(
-                    com.highquality.base.exception.GenericException(
-                        statusCode = 999,
-                        statusMessage = "Something unexpected happened"
+            it.printStackTrace()
+            if (it is UnknownHostException) {
+                emit(
+                    Response.Failure(
+                        NoInternetException(
+                            statusCode = 999,
+                            statusMessage = "Something unexpected happened"
+                        )
                     )
                 )
-            )
+            } else {
+                emit(
+                    Response.Failure(
+                        GenericException(
+                            statusCode = 999,
+                            statusMessage = "Something unexpected happened"
+                        )
+                    )
+                )
+            }
         }
 }
