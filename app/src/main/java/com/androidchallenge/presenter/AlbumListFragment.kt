@@ -28,6 +28,7 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
 
         setupObserversViewModel()
         fetchAlbumList()
+        bindData()
 
     }
 
@@ -37,7 +38,7 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
     }
 
     private fun initRecycler(albumList: List<AlbumResponse>) {
-        adapter = AlbumAdapter(albumList)
+        adapter = AlbumAdapter(albumList) { albumResponse -> onItemSelected(albumResponse) }
         binding.recyclerview.adapter = adapter
     }
 
@@ -84,7 +85,16 @@ class AlbumListFragment : Fragment(R.layout.fragment_album_list) {
     }
 
     private fun bindData() {
+        binding.layoutGenericError.textviewTry.setOnClickListener {
+            viewModel.fetchAlbums()
+        }
+        binding.layoutNoConnection.textviewTry.setOnClickListener {
+            viewModel.fetchAlbums()
+        }
+    }
 
+    private fun onItemSelected(albumResponse: AlbumResponse) {
+        Toast.makeText(requireContext(), albumResponse.title, Toast.LENGTH_LONG).show()
     }
 
 

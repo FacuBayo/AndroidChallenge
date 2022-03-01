@@ -10,10 +10,12 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = ItemAlbumBinding.bind(view)
 
-    fun bind(album: AlbumResponse) {
+    fun bind(album: AlbumResponse, onClickListener: (AlbumResponse) -> Unit) {
 
         binding.textViewAlbumId.text = "ID: ${album.id}"
         binding.textViewAlbumTitle.text = album.title
+
+        itemView.setOnClickListener { onClickListener(album) }
 
     }
 }
