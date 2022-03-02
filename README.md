@@ -4,7 +4,7 @@
  This app was developed using different techniques and technologies
 
 
-* Android Native(Kotlin).
+* Android Native.
 * MVVM Architecture.
 * Clean Code - Solid Principles.
 * Repository Pattern.
@@ -18,6 +18,9 @@
 * Base module for base classes.
 * Picasso
 * Some animations
+* Navigation componens
+* Safe args
+* Mockito
 
 
     
